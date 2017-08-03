@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import json
 import operator
+from functools import reduce
 
 from django.views.generic import ListView
 from django.http import HttpResponse
