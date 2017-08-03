@@ -57,9 +57,31 @@ class DataTables(ListView):
 
         return order_by
 
-    def get_url_modal(self, url, modal_name, label_name="Editar"):
-        url_modal = '<a href="%s" class="%s">%s</a>'
-        return url_modal % (url, modal_name, label_name)
+    def get_buttons(self, array_buttons):
+        """
+        Generate buttons for use in each table row.
+
+        array_buttons: array of objects
+        **object style: url: the url for go to,
+                        class_name: classes for the element,
+                        label: string label for element
+                        icon: icon classes for element
+
+        return: array of html 'a' elements
+        """
+        mount_buttons = []
+        bt_template = '<a href="%s" class="%s">%s</a>'
+        for item in array_buttons:
+            icon_tp = '<i class="%s"></i> '
+            label_txt = (icon_tp % (item['icon'])) if 'icon' in item else ''
+            label_txt += item['label'] if 'label' in item else ''
+
+            mount_buttons.append(bt_template % (
+                item['url'] if 'url' in item else '',
+                item['class_name'] if 'class_name' in item else '',
+                label_txt
+            ))
+        return ' '.join(mount_buttons)
 
     def get_obj(self, qs, offset=0, limit=10, order_by=None):
         if order_by:
